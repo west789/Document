@@ -1,2 +1,5 @@
 # Document
-Record some skills and difficulties in work
+#记录一些关于自己平时遇到问题的小技巧及解决办法，以其能够回顾并加深对知识的理解
+>
+>
+>
