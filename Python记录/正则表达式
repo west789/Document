@@ -1,0 +1,4 @@
+1.  反向引用  <html>(title)<\1>    <html>title<title>能够匹配上
+
+2.  正向引用  (?=xxx) 匹配以xxx结尾的 (?!xxx) 匹配不是以xxx结尾的
+    后向引用  (?<=xxx)匹配以xxx开头的 ((?<=xxx) 匹配不是以xxx开头的

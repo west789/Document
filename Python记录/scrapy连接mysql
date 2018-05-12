@@ -1,0 +1,38 @@
+class MysqlDB(object):
+    def __init__(self):
+        try:
+            self.conn = pymysql.connect('localhost', 'root', '123456', 'test', charset='utf8')
+            self.cursor = self.conn.cursor()
+        except Exception as e:
+            print('连接数据库失败：%s' % str(e))
+
+    def close(self):
+        self.cursor.close()
+        self.conn.close()
+
+
+class MyprojectPipeline (MysqlDB):
+    def process_item(self, item, spider):
+        
+        sql = 'insert into tmp_school_major_uk(university, location, department, programme, degree_type, overview, ucas_code,' \
+              'start_date, duration, ' \
+              'modules, teaching_assessment, IELTS, TOEFL, deadline, entry_requirements, chinese_requirements, other)VALUES' \
+              '  (%s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+        try:
+            self.cursor.execute(sql, (item["university"], item['location'], item["department"], item["programme"], item["degree_type"],
+                                      item["overview"], item["ucas_code"], item["start_date"], item["duration"], item["modules"], item['teaching_assessment'],
+                                      item['IELTS'], item["TOEFL"], item["deadline"], item["rntry_requirements"], item['chinese_requirement'], item["other"]))
+            #     item["overview"], item["start_date"], item["duration"],))
+            # self.cursor.execute(sql, (
+            #     item["university"]
+            #     , item["department"], item["programme"], item["degree_type"],
+            #     item["overview"], item["start_date"], item["duration"],
+            #     item["modules"], item['teaching_assessment']
+            # ))
+            self.conn.commit()
+        except Exception as e:
+            self.conn.rollback()
+            print(e)
+            print("执行sql语句失败")
+
+        return item
