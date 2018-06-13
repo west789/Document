@@ -1,0 +1,39 @@
+1.  分布式爬取：
+# 指定使用scrapy-redis的调度器
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# 指定使用scrapy-redis的去重
+DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'  #警告：dupefilter不加s，犯过错误
+
+# 在redis中保持scrapy-redis用到的各个队列，从而允许暂停和暂停后恢复，也就是不清理redis queues
+SCHEDULER_PERSIST = True
+# 指定redis数据库的连接参数
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
+
+#主爬虫文件的配置
+from scrapy_redis.spiders import RedisSpider
+name = 'dangdang'
+allowed_domains = ['dangdang.com']
+# start_urls = ['http://book.dangdang.com/']
+redis_key = "dangdang"
+
+redis中加入键： lpush dangdang http://book.dangdang.com/
+
+2.js动态加载问题
+准备工作：	
+pip p install PyExecJS
+import execjs
+print(execjs.get().name)  #渲染引擎
+
+#demo
+import execjs
+node=execjs.get()   #声明一个运行环境
+filePath='qixiang/testPyexec.js'  
+ctx=node.compile(open(filePath).read())  #执行刚才保存下来的加密库
+
+js='add("{0}", "{1}")'.format(1, 2) #构造一个 js 字符串，传递这些参数
+result=ctx.eval(js)  #模拟执行
+print(result)
+
+3.str的format问题：js="getEncryptedData({},{},{},{},{})".format(method, city, typeName, startTime, endTime)
+js='getEncryptedData("{0}", "{1}", "{2}", "{3}", "{4}")'.format(method, city, typeName, startTime, endTime)

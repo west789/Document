@@ -1,0 +1,9 @@
+1.sudo apt autoremove python3.5
+2.安装图形界面
+sudo apt-get update 
+sudo apt-get install ubuntu-desktop  --reinstall
+sudo apt-get install unity 
+sudo shutdown -r now
+3.安装文件传输(上传下载)
+CentOS，则输入命令【yum install lrzsz】；
+Ubuntu ，则输入命令【sudo apt-get install lrzsz】。

@@ -23,6 +23,8 @@ DATABASES = {
 
 4. python项目依赖生辰requirements.txt
     pip freeze > requirements.txt
+    执行依赖文件命令：
+    pip install -r requirements.txt
 
 5.关联表的str属性设置其print或xadmin中列显示的值
 6.在filter或all或get中，关联查询的语句（字段_ _关联表字段_ _比较符号）
@@ -37,3 +39,12 @@ itemData['attendStartTime'] = item.attendStartTime.strftime("%Y-%m-%d %H:%M:%S")
     先添加null=True，执行成功后，将数据库里面的附上值，并删除迁移文件，最后将null=True删除，再次执行迁移
 12.前端知识 autocomplete="off"不自动填充表单
 13.alert（字符串）则很可能需要Json.parse
+14.测试celery的时候遇到了没有下载应用程序的错误
+    解决办法：import django
+            django.setup()
+
+15.django安装xadmin，直接pip install xadmin会报字符编码错误
+ 下载 zip 安装包 
+https://github.com/sshwsfc/xadmin 
+新建空白文件README.rst 压缩进 zip ，(必须是zip，rar不行)中替换掉同名文件
+然后使用pip install xadmin-master进行安装(使用已经修改好适配django2.x版本bishe中的xadmin)
