@@ -42,9 +42,20 @@ itemData['attendStartTime'] = item.attendStartTime.strftime("%Y-%m-%d %H:%M:%S")
 14.测试celery的时候遇到了没有下载应用程序的错误
     解决办法：import django
             django.setup()
-
+且必须是这种形式
+import time
+from celery import task
+import django
+django.setup()
 15.django安装xadmin，直接pip install xadmin会报字符编码错误
  下载 zip 安装包 
 https://github.com/sshwsfc/xadmin 
 新建空白文件README.rst 压缩进 zip ，(必须是zip，rar不行)中替换掉同名文件
 然后使用pip install xadmin-master进行安装(使用已经修改好适配django2.x版本bishe中的xadmin)
+15.ERROR: Pidfile (celerybeat.pid) already exists. Seems we're already running? (pid: 11068)
+
+解决方法：
+
+删除项目下 celertbeat.pid文件即可
+python manage.py celery worker --loglevel=info
+python manage.py celery beat --loglevel=info

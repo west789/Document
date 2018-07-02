@@ -1,0 +1,2 @@
+python.exe -m pip install -r .\requirements.txt
+python的类中调用方法需使用self.方法名，类似this
