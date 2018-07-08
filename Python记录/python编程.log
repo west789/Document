@@ -42,3 +42,11 @@ if __name__ == '__main__':
 
 #打包
 pyinstaller -F youdaofanyi.py
+
+配置：setting.json
+{
+    "python.pythonPath": "D:\\AnacodaInstall\\python.exe"
+}
+
+python多进程在windows环境下：
+必须写上 if __name == "__main__"
