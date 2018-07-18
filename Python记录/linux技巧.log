@@ -56,3 +56,5 @@ sudo dpkg -s iptux #查看iptux软件包的详细信息（软件名称可通过d
 sudo dpkg -r iptux #卸载iptux软件包（软件名称可通过dpkg -I命令查看，其中-r等价于--remove）
 注：dpkg命令无法自动解决依赖关系。如果安装的deb包存在依赖包，则应避免使用此命令，或者按照依赖关系顺序安装依赖包。
 8.linux小工具 sudo apt-get install gdebi
+
+9. ctrl+D ctrl+w ctrw+K ctrl+A
