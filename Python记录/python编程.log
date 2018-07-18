@@ -40,13 +40,16 @@ if __name__ == '__main__':
 # from logginTest import logger
 # logger.warning("111111111")
 
-#打包
+3.#打包
 pyinstaller -F youdaofanyi.py
 
-配置：setting.json
+4.  配置：setting.json
 {
     "python.pythonPath": "D:\\AnacodaInstall\\python.exe"
 }
 
 python多进程在windows环境下：
 必须写上 if __name == "__main__"
+
+5.os.system("python main.py")
+    os.chdir(".\\twitterCrawl")
