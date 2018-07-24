@@ -2,3 +2,31 @@
 1.修改数据库连接charset='utf8mb4'，2.修改数据库字段编码格式为'utf8mb4',。
 2.创建数据库并指定编码
 CREATE DATABASE IF NOT EXISTS my_db default character set utf8 COLLATE utf8_general_ci;
+
+ubuntu安装mysql5.7出现问题：
+sudo apt-get install mysql-server5.7后没有提示设置密码。
+解决办法:
+            1. sudo vim /etc/mysql/debian.cnf
+            在这个文件里面有着MySQL默认的用户名和用户密码， 
+            最最重要的是：用户名默认的不是root，而是debian-sys-maint，如下所示
+
+            # Automatically generated for Debian scripts. DO NOT TOUCH!
+            [client]
+            host     = localhost
+            ***user     = debian-sys-maint
+            password = Z1fVrmTiZNxxw29o***
+            socket   = /var/run/mysqld/mysqld.sock
+            [mysql_upgrade]
+            host     = localhost
+            user     = debian-sys-maint
+            password = Z1fVrmTiZNxxw29o
+            socket   = /var/run/mysqld/mysqld.sock
+            密码会随即给一个很复杂的，这个时候，要进入MySQL的话，就是需要在终端把root更改为debian-sys-maint，如下代码
+
+            mysql -u debian-sys-maint -p
+            然后终端会提示你输入密码
+
+            Enter password: 
+            这是输入文件中的密码即可成功登录。
+            update mysql.user set authentication_string=password('password'),plugin=""  where user='root'and Host = 'localhost';
+            需要将authentication和plugin两个字段值改掉，plugin不改，就必须使用sudu su登录才可使用，主要修改root的权限

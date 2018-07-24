@@ -71,3 +71,18 @@ sudo dpkg -r iptux #卸载iptux软件包（软件名称可通过dpkg -I命令查
 
         sudo rm /var/cache/apt/archives/lock
         sudo rm /var/lib/dpkg/lock
+11、
+在Ubuntu中，升级了pip,再次使用pip 安装相关的python包的时候就出现以下错误
+ImportError: cannot import name main
+解决：pip文件在usr/bin目录下，cd进去，进行以下修改
+
+把下面的三行
+
+from pip import main
+if __name__ == '__main__':
+    sys.exit(main())
+换成下面的三行
+
+from pip import __main__
+if __name__ == '__main__':
+    sys.exit(__main__._main())
