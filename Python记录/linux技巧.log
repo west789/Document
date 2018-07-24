@@ -58,3 +58,16 @@ sudo dpkg -r iptux #卸载iptux软件包（软件名称可通过dpkg -I命令查
 8.linux小工具 sudo apt-get install gdebi
 
 9. ctrl+D ctrl+w ctrw+K ctrl+A
+
+10.
+        1 问题描述： 
+        在Ubuntu中使用sudo apt install git 命令时出现以下的错误提示： 
+        E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable) 
+        E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable) 
+        2 原因： 
+        之前安装的程序没能成功完成（那时安装了sublime text但是不成功），但是仍然占有apt程序的锁，导致其他程序无法再进行安装操作 
+        3 解决方式： 
+        执行完以下的命令再重新安装软件
+
+        sudo rm /var/cache/apt/archives/lock
+        sudo rm /var/lib/dpkg/lock

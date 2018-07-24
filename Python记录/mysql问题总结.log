@@ -1,0 +1,4 @@
+针对mysql插入emogi表情错误提示：
+1.修改数据库连接charset='utf8mb4'，2.修改数据库字段编码格式为'utf8mb4',。
+2.创建数据库并指定编码
+CREATE DATABASE IF NOT EXISTS my_db default character set utf8 COLLATE utf8_general_ci;
