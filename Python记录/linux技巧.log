@@ -86,3 +86,9 @@ if __name__ == '__main__':
 from pip import __main__
 if __name__ == '__main__':
     sys.exit(__main__._main())
+
+12.uwsgi部署：
+
+uwsgi --ini uwsgi.ini --daemonize /tmp/uwsgi.log
+把 uwsgi 主进程号写进 文件然后 reload.
+uwsgi --reload ./uwsgi.pid
