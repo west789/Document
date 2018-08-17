@@ -1,0 +1,5 @@
+后台运行uwsgi服务
+1.uwsgi --ini uwsgi.ini --daemonize /tmp/uwsgi.log
+
+重启uwsgi服务
+2.uwsgi --reload ./uwsgi.pid

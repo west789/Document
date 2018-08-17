@@ -31,4 +31,9 @@ git push -u origin --tags
 
 忽略对文件的跟踪:git rm --cached < file name >
 
-
+ssh-keygen -t rsa -C " example@example.com"：
+配置多个git远程：config文件配置
+Host gitlab.com
+    HostName gitlab.com
+    PreferredAuthentications publickey
+    IdentityFile C:/Users/psl/.ssh/id_rsa_labkey
