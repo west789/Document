@@ -42,6 +42,10 @@ if __name__ == '__main__':
 
 3.#打包
 pyinstaller -F youdaofanyi.py
+pyinstaller -w -F -p F:\anacondainstall\lib\site-packages wafer_gui.py
+------  w参数去掉控制台， F打成一个exe， p打包某些依赖库经常因为这个出现打包后无法运行的情况
+若要查看日志加入-c参数， 即pyinstaller -w -c -F wafer_gui.py， 然后打开控制台，切换到dist目录下
+执行wafer_gui.exe，这样日志就能打印出来，而不会一闪即退
 
 4.  配置：setting.json
 {
@@ -53,3 +57,14 @@ python多进程在windows环境下：
 
 5.os.system("python main.py")
     os.chdir(".\\twitterCrawl")
+
+6.
+这是因为在函数调用的过程中，当前路径.代表的是被执行的脚本文件的所在路径。
+在这个情况中，.表示的就是main.py的所在路径，所以load_txt()函数会在dir1文件夹中寻找test.txt文件。
+解决办法：
+import os
+
+def load_txt()
+    module_path = os.path.dirname(__file__)    
+    filename = modelu_path + '/test.txt'
+    return open(filenamem, 'r').read()

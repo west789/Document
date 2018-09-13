@@ -30,3 +30,70 @@ sudo apt-get install mysql-server5.7后没有提示设置密码。
             这是输入文件中的密码即可成功登录。
             update mysql.user set authentication_string=password('password'),plugin=""  where user='root'and Host = 'localhost';
             需要将authentication和plugin两个字段值改掉，plugin不改，就必须使用sudu su登录才可使用，主要修改root的权限
+
+2.mysql 存储过程
+mysql存储过程没有智能提示，找bug比较困难，一定要注意分号（；）
+两种创建变量方式：
+(1)declare lotid int default 0; ----在存储过程中使用
+(2)set @lotid = '123';------在会话的全局使用
+concat的使用例如
+set @table_name = 'report_demo'
+concat('Truncate Table ', @table_name )------注意Table后面的空格和最后不能像元组加逗号(,)
+
+SHOW PROCEDURE STATUS LIKE 'C%'\G; --查看存储过程
+DROP PROCEDURE CountProc; 删除存储过程
+
+1>一般刚开始写存储过程：
+delimiter // 结束时候再换回delimiter ;
+2>存储过程中if else使用时一定注意end if；不要忘记，if EXISTS 就是if语句了
+例如：
+Delimiter //
+CREATE PROCEDURE report_demo(in tail varchar(20))
+Begin
+set @taildate= concat('reprot_', tail);
+if EXISTS (select 1 from information_schema, Tables where table_name = @taildate and 
+           table_schema = Database()) Then
+    set @drop_sql = concat('Truncate Tabel ', @taildate);
+    prepare drop_sql from @drop_sql;
+    execute drop_sql;
+else 
+    set @create_sql = concate('create table if not exist ', @taildate, 
+    '(id int not null auto_incrament primary key,name varchar(20))');
+    prepare create_sql from @create_sql;
+    execute create_sql;
+end if;
+end //
+delimiter ;
+
+mysql的权限问题：
+1）查看用户权限：
+-- 查看本地root的权限，没有指定后面的localhost则默认为'%'
+show grants for root@'localhost';
+-- 查看指定host的root的权限
+show grants for root@'192.168.122.12';
+2）创建用户
+use mysql;
+create user 'subuser'@'localhost' identified by 'Avl1108'  &&&&
+create user 'subuser'@'10.209.156.242' identified by 'Avl1108'
+3)修改用户名密码：
+5.7 以下版本：
+use msyql;
+update user set password = password('123456') where user = 'subuser';
+5.7及以上版本:
+use msyql;
+update user set authentication_string = password('123456') where user = 'subuser';
+flush privileges;
+4)删除用户
+delete from user where user = 'subuser' and host = 'localhost';
+flush privileges;
+5)赋予撤销
+user mysql;
+grant select, delete, update, insert on database.table to 'subuser'@'%' identified by 'Avl11108';
+flush privileges;  直接执行这两条语句也有创建用户的功能
+赋予全部权限：
+grant all privileges on ..........
+
+revoke update on .........
+flush privileges;
+revoke all on ..........
+flush privileges;

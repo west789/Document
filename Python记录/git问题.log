@@ -37,3 +37,5 @@ Host gitlab.com
     HostName gitlab.com
     PreferredAuthentications publickey
     IdentityFile C:/Users/psl/.ssh/id_rsa_labkey
+
+2.windows下创建.gitignore，使用ren 1.txt .gitignore创建无扩展名的文件
