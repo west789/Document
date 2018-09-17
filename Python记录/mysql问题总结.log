@@ -97,3 +97,9 @@ revoke update on .........
 flush privileges;
 revoke all on ..........
 flush privileges;
+
+mysql连接数问题:
+查看连接数: show variables like 'max_connnections'
+修改连接数：set global max_connnections=10
+其中经过测试正常活动的连接数为max_connectons + 1,如上即为11，其中打开连接算一个，打开数据库算一个连接，
+打开具体的表，查询一条语句都算连接
