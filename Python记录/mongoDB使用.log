@@ -1,0 +1,9 @@
+安装：
+
+mongod --dbpath "C:\mongodb\db" --logpath 
+
+"C:\mongodb\log.txt" --install --serviceName "MongoDB"
+
+卸载：
+
+mongod.exe --remove --serviceName "MongoDB"

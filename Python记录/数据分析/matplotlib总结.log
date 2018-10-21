@@ -1,0 +1,14 @@
+1.什么是matplotlib？进行数据可视化，更直观呈现数据。使数据更加客观、更具说服力
+2.matplotlib基本要点?
+设置图片的大小和分辨率(plt.figure)；
+实现图片的保存(plt.savefit)
+设置xy轴上的刻度和字符串(xticks)
+解决刻度稀疏和密集问题(使用列表及步长)
+设置标题，xy轴的label(title, xlable, ylable)
+设置字体(font_manager, fontProperties, prop)
+在一个图上绘制多个图形(添加plot)
+添加图例
+
+3.matplotlib的散点图，直方图，柱状图
+主要有折线图、直方图、条形图、散点图
+fc-list linux支持的字体
