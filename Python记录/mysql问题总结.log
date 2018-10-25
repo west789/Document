@@ -66,6 +66,7 @@ end //
 delimiter ;
 
 mysql的权限问题：
+查看所有用户: select * from msyql.user;
 1）查看用户权限：
 -- 查看本地root的权限，没有指定后面的localhost则默认为'%'
 show grants for root@'localhost';
@@ -104,3 +105,8 @@ mysql连接数问题:
 其中经过测试正常活动的连接数为max_connectons + 1,如上即为11，其中打开连接算一个，打开数据库算一个连接，
 打开具体的表，查询一条语句都算连接，但是经过测试算上所有的为你设置的max_connnections + 1 ,其中连接数最大值
 为2048
+查看当前连接数：SHOW  FULL PROCESSLIST
+10.mysql分组选出最大值的记录
+SELECT a.* from stu a INNER JOIN 
+(SELECT age, MAX(height) height from stu GROUP BY age)b
+ on a.age=b.age and a.height=b.height ORDER BY age

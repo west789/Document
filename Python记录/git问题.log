@@ -39,3 +39,9 @@ Host gitlab.com
     IdentityFile C:/Users/psl/.ssh/id_rsa_labkey
 
 2.windows下创建.gitignore，使用ren 1.txt .gitignore创建无扩展名的文件
+3. git commit --amend 修改最后一次提交，在最后一次提交的基础上修改
+git log 查看提交历史
+git reflog 查看修改历史
+git reset --hard <commit的号：类似于f525fd或HEAD@1>
+另外尽量使用:
+git reset --soft <同上> 会回到暂存区状态，不会像hard一样所有修改删除
