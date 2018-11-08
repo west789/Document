@@ -1,0 +1,45 @@
+1.pandas读取mysql数据：
+导入两个包：
+import pandas as pd 
+from sqlalchemy import create_engine
+
+engine = create_engine('mysql+pymysql://root:123qwe@10.209.152.109:3306/reportdata')
+读mysql: df = pd.read_sql_query(selSql, engine)
+写mysql：df.to_sql('df', engine, if_exists='append', index=False)
+
+2.创建新的dataFrame
+df = pd.DataFrame(columns=['one', 'two', 'three'])
+3.取行的值：单行(如第一行)： df.loc[0]
+取单行多列的值：df.loc[0， ['two', 'three', 'four']]
+取多行多列的值：df.loc[[0, 1], ['two', 'three']]
+
+利用iloc位置索引：df.iloc[[0, 1 ], [1,2]]
+        切片: df.iloc[:1, :1]
+3.给df赋值
+df.insert(0, 'item', df['one']) 
+df.loc[0] = ['Tom', 'Green', 'Jim'] 给一行赋值       
+df1 = df[df['id'] != 0].copy
+df1.drop(['id', 'age'], axis=1, inplace=True) axis=1说明删除列，inplace=True说明在原df上操作
+df1.rename(columns={'id':'id111'}, inplace=True)重命名列明
+df2 = df[['id', 'age']]  返回一个DataFrame
+4.拼接多个df
+按行向下拼接: df.concat([df1, df2, df3], ignore_index=True, sort=True) 默认axis=0，即行的轴，若是按列，则为axis1
+axis =0 是按照行的方向，即向下走，axis=1是按照列的方向，即向右走
+5.根据多个列的条件赋值给新的列
+df['compound_field'] = df.apply(lambda row:addNewColumn(row['id'], row['age']), axis=1)
+df['compound_field'] = df.apply(addNewColumn1, axis=1, args = ('ok',))
+def addNewColumn(id, age):
+    return id+age
+def addNewColumn1(df, id):
+        return id+age
+其中addNewColumn为执行的函数名，括号里面为传递的形参
+6.pandas有条件的赋值某列操作
+df = df[(df['id']==3) & (df['age']==12)，'height']=156
+操作符： 或 |，in操作  isin， 取反  ~
+7.对某一列改变类型
+df['id']=df['id'].map(str).str.strip()
+将数据转化为datetime类型：
+df['date'] = pd.to_datetime(df['date'])
+8.apply作用于df的一维向量上
+applymap作用于df的每一个元素上
+map作用于一个series的每一个元素上

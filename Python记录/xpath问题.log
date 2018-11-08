@@ -1,0 +1,86 @@
+XPath学习:轴(8)——following-sibling
+     XPath 是一门在 XML 文档中查找信息的语言。XPath 可用来在 XML 文档中对元素和属性进行遍历。
+####
+     XPath 是 W3C XSLT 标准的主要元素，并且 XQuery 和 XPointer 同时被构建于 XPath 表达之上。
+
+     推荐一个挺不错的网站：http://www.zvon.org/xxl/XPathTutorial/General_chi/examples.html  里面有很不错的例子，下面的例子中红色字体表示使用对应语法获取的元素（或属性）。
+
+     XPath轴(XPath Axes)可定义某个相对于当前节点的节点集：
+
+     1、child  选取当前节点的所有子元素
+
+     2、parent  选取当前节点的父节点
+
+     3、descendant 选取当前节点的所有后代元素（子、孙等）
+
+     4、ancestor  选取当前节点的所有先辈（父、祖父等）
+
+     5、descendant-or-self 选取当前节点的所有后代元素（子、孙等）以及当前节点本身
+
+     6、ancestor-or-self  选取当前节点的所有先辈（父、祖父等）以及当前节点本身
+
+     7、preceding-sibling 选取当前节点之前的所有同级节点
+
+     8、following-sibling 选取当前节点之后的所有同级节点
+
+     9、preceding   选取文档中当前节点的开始标签之前的所有节点
+
+     10、following   选取文档中当前节点的结束标签之后的所有节点
+
+     11、self  选取当前节点
+
+     12、attribute  选取当前节点的所有属性
+
+     13、namespace 选取当前节点的所有命名空间节点
+
+ 
+
+     following-sibling 选取当前节点之后的所有同级节点,跟preceding-sibling一样都是选取同级同父的节点，只不过following是取对应节点之后的节点，preceding-sibling取的是该节点之前的节点。
+
+ 
+
+     /AAA/BBB/following-sibling::*    取/AAA/BBB节点的之后的所有同级节点
+
+  <AAA>  
+     <BBB>  
+          <CCC/>  
+          <DDD/>  
+     </BBB>  
+     <XXX>  
+          <DDD>  
+               <EEE/>  
+               <DDD/>  
+               <CCC/>  
+               <FFF/>  
+               <FFF>  
+                    <GGG/>  
+               </FFF>  
+          </DDD>  
+     </XXX>  
+     <CCC>  
+          <DDD/>  
+     </CCC>  
+   </AAA>
+
+     //CCC/following-sibling::*    选取所有CCC元素的之后所有同级节点
+
+   <AAA>  
+     <BBB>  
+          <CCC/>  
+          <DDD/>  
+     </BBB>  
+     <XXX>  
+          <DDD>  
+               <EEE/>  
+               <DDD/>  
+               <CCC/>  
+               <FFF/>  
+               <FFF>  
+                    <GGG/>  
+               </FFF>  
+          </DDD>  
+     </XXX>  
+     <CCC>  
+          <DDD/>  
+     </CCC>  
+   </AAA>

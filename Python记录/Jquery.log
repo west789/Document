@@ -1,0 +1,68 @@
+1.//两种方法设置disabled属性
+$('#areaSelect').attr("disabled",true);
+$('#areaSelect').attr("disabled","disabled");
+
+//三种方法移除disabled属性
+$('#areaSelect').attr("disabled",false);
+$('#areaSelect').removeAttr("disabled");
+$('#areaSelect').attr("disabled","");
+
+2.form表单的csrf攻击 ： {% csrf_token %}
+
+3.ajax实现跨站请求三种方式
+复制代码
+<script>
+  $(".eq").on("click",function () {
+        $.ajax({
+            url:"/eq/",
+            type:"POST",
+            data:{
+                csrfmiddlewaretoken:{{ csrf_token }}, //必须写在模板中，才会被渲染
+                a:$(".a").val(),
+                b:$(".b").val()
+            },
+            success:function (data) {
+
+              $(".c").html(data);
+            }
+        })
+    })
+</script>
+复制代码
+第二种
+复制代码
+//模板页面中必须要有 {% csrf_token %}
+<script>
+    $(".eq").on("click",function () {
+        $.ajax({
+            url:"/eq/",
+            type:"POST",
+            data:{
+                csrfmiddlewaretoken:$("input:first").val(),
+                a:$(".a").val(),
+                b:$(".b").val()
+            },
+            success:function (data) {
+
+              $(".c").html(data);
+            }
+        })
+    })
+</script>
+复制代码
+第三种
+复制代码
+<script src="/static/jquery.cookie.js"></script> //必须先引入它
+<script>
+    $("#btn").on("click",function () {
+     $.ajax({
+        url:"/lianxi/",
+        type:"POST",
+        headers:{"X-CSRFToken":$.cookie('csrftoken')},
+        data:$("#f1").serialize()
+    }
+    )
+    })
+
+</script>
+复制代码

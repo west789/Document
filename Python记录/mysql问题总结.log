@@ -1,0 +1,118 @@
+针对mysql插入emogi表情错误提示：
+1.修改数据库连接charset='utf8mb4'，2.修改数据库字段编码格式为'utf8mb4',。
+2.创建数据库并指定编码
+CREATE DATABASE IF NOT EXISTS my_db default character set utf8 COLLATE utf8_general_ci;
+
+ubuntu安装mysql5.7出现问题：
+sudo apt-get install mysql-server5.7后没有提示设置密码。
+解决办法:
+            1. sudo vim /etc/mysql/debian.cnf
+            在这个文件里面有着MySQL默认的用户名和用户密码， 
+            最最重要的是：用户名默认的不是root，而是debian-sys-maint，如下所示
+
+            # Automatically generated for Debian scripts. DO NOT TOUCH!
+            [client]
+            host     = localhost
+            ***user     = debian-sys-maint
+            password = Z1fVrmTiZNxxw29o***
+            socket   = /var/run/mysqld/mysqld.sock
+            [mysql_upgrade]
+            host     = localhost
+            user     = debian-sys-maint
+            password = Z1fVrmTiZNxxw29o
+            socket   = /var/run/mysqld/mysqld.sock
+            密码会随即给一个很复杂的，这个时候，要进入MySQL的话，就是需要在终端把root更改为debian-sys-maint，如下代码
+
+            mysql -u debian-sys-maint -p
+            然后终端会提示你输入密码
+
+            Enter password: 
+            这是输入文件中的密码即可成功登录。
+            update mysql.user set authentication_string=password('password'),plugin=""  where user='root'and Host = 'localhost';
+            需要将authentication和plugin两个字段值改掉，plugin不改，就必须使用sudu su登录才可使用，主要修改root的权限
+
+2.mysql 存储过程
+mysql存储过程没有智能提示，找bug比较困难，一定要注意分号（；）
+两种创建变量方式：
+(1)declare lotid int default 0; ----在存储过程中使用
+(2)set @lotid = '123';------在会话的全局使用
+concat的使用例如
+set @table_name = 'report_demo'
+concat('Truncate Table ', @table_name )------注意Table后面的空格和最后不能像元组加逗号(,)
+
+SHOW PROCEDURE STATUS LIKE 'C%'\G; --查看存储过程
+DROP PROCEDURE CountProc; 删除存储过程
+
+1>一般刚开始写存储过程：
+delimiter // 结束时候再换回delimiter ;
+2>存储过程中if else使用时一定注意end if；不要忘记，if EXISTS 就是if语句了
+例如：
+Delimiter //
+CREATE PROCEDURE report_demo(in tail varchar(20))
+Begin
+set @taildate= concat('reprot_', tail);
+if EXISTS (select 1 from information_schema, Tables where table_name = @taildate and 
+           table_schema = Database()) Then
+    set @drop_sql = concat('Truncate Tabel ', @taildate);
+    prepare drop_sql from @drop_sql;
+    execute drop_sql;
+else 
+    set @create_sql = concate('create table if not exist ', @taildate, 
+    '(id int not null auto_incrament primary key,name varchar(20))');
+    prepare create_sql from @create_sql;
+    execute create_sql;
+end if;
+end //
+delimiter ;
+
+mysql的权限问题：
+查看所有用户: select * from msyql.user;
+1）查看用户权限：
+-- 查看本地root的权限，没有指定后面的localhost则默认为'%'
+show grants for root@'localhost';
+-- 查看指定host的root的权限
+show grants for root@'192.168.122.12';
+2）创建用户
+use mysql;
+create user 'subuser'@'localhost' identified by 'Avl1108'  &&&&
+create user 'subuser'@'10.209.156.242' identified by 'Avl1108'
+3)修改用户名密码：
+5.7 以下版本：
+use msyql;
+update user set password = password('123456') where user = 'subuser';
+5.7及以上版本:
+use msyql;
+update user set authentication_string = password('123456') where user = 'subuser';
+flush privileges;
+4)删除用户
+delete from user where user = 'subuser' and host = 'localhost';
+flush privileges;
+5)赋予撤销
+user mysql;
+grant select, delete, update, insert on database.table to 'subuser'@'%' identified by 'Avl11108';
+flush privileges;  直接执行这两条语句也有创建用户的功能
+赋予全部权限：
+grant all privileges on ..........
+
+revoke update on .........
+flush privileges;
+revoke all on ..........
+flush privileges;
+
+mysql连接数问题:
+查看连接数: show variables like 'max_connnections'
+修改连接数：set global max_connnections=10
+其中经过测试正常活动的连接数为max_connectons + 1,如上即为11，其中打开连接算一个，打开数据库算一个连接，
+打开具体的表，查询一条语句都算连接，但是经过测试算上所有的为你设置的max_connnections + 1 ,其中连接数最大值
+为2048
+查看当前连接数：SHOW  FULL PROCESSLIST
+10.mysql分组选出最大值的记录
+SELECT a.* from stu a INNER JOIN 
+(SELECT age, MAX(height) height from stu GROUP BY age)b
+ on a.age=b.age and a.height=b.height ORDER BY age
+
+ 2.
+
+ 修改配置文件 /etc/my.cnf 包括sock
+ chcon -R --reference=/var/lib/mysql /disk2T-2/mysqldb
+ setenforce 0 

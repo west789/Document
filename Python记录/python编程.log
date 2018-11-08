@@ -1,0 +1,89 @@
+1. f.read()读取所有行
+    f.readline() 读取第一行
+    f.readlines()返回一个列表
+  f.write()当写的数据为列表时，写的时候会出错
+  f.writelines()可以写进去所有数据，没有\n
+  没有f.writeline()这种写法错误
+2.logging日志配置
+scrapy配置：setting文件：
+import datetime
+to_day = datetime.datetime.now()
+log_file_path = "log/scrapy_{}_{}_{}.log".format(to_day.year,to_day.month,to_day.day)
+
+LOG_LEVEL = "WARNING"
+LOG_FILE = log_file_pat
+爬虫.py文件：
+import logging
+logging.warning("1"*100)
+
+#普通文件配置
+import logging
+from datetime import datetime
+
+to_day = datetime.now()
+log_file_path = "test_{}_{}_{}.log".format(to_day.year, to_day.month, to_day.day)
+
+logging.basicConfig(
+    level=logging.WARNING,
+    filename=log_file_path,
+    format='%(asctime)s %(filename)s [line:%(lineno)d] %(levelname)s : %(message)s',
+    # datefmt='%a, %d %b %Y %H:%M:%s'  #修改日期格式
+)
+logger = logging.getLogger(__name__)
+
+if __name__ == '__main__':
+    logger.warning("this is a fun1 waring")
+
+
+
+#其他文件使用日志
+# from logginTest import logger
+# logger.warning("111111111")
+
+3.#打包
+pyinstaller -F youdaofanyi.py
+pyinstaller -w -F -p F:\anacondainstall\lib\site-packages wafer_gui.py（以管理员权限运行cmd，若不,可能出现
+permissError）
+------  w参数去掉控制台， F打成一个exe， p打包某些依赖库经常因为这个出现打包后无法运行的情况
+若要查看日志加入-c参数， 即pyinstaller -w -c -F wafer_gui.py， 然后打开控制台，切换到dist目录下
+执行wafer_gui.exe，这样日志就能打印出来，而不会一闪即退
+pyinstaller引起的路径问题：pyinstaller会使用c盘的路径
+if getattr(sys, 'frozen', False):
+    module_path = os.path.dirname(sys.executable)
+    filename = module_path + '/./rules/package.json'
+elseif __file__:
+    module_path = os.path.dirname(__file__)
+    filename = modelu_path + '/../rules/resource/package.json'
+
+4.  配置：setting.json
+{
+    "python.pythonPath": "D:\\AnacodaInstall\\python.exe"
+}
+
+python多进程在windows环境下：
+必须写上 if __name == "__main__"
+
+5.os.system("python main.py")
+    os.chdir(".\\twitterCrawl")
+
+6.
+这是因为在函数调用的过程中，当前路径.代表的是被执行的脚本文件的所在路径。
+在这个情况中，.表示的就是main.py的所在路径，所以load_txt()函数会在dir1文件夹中寻找test.txt文件。
+解决办法：
+import os
+
+def load_txt()
+    module_path = os.path.dirname(__file__)    
+    filename = modelu_path + '/test.txt'
+    return open(filenamem, 'r').read()
+
+7.filter的使用
+runCols = filter(addTowCols, colsList)第一个参数是函数名， 第二个参数是要作用的列表
+def addTowCols(item):
+    return item != 'id' # item即是list中的每个值
+若要传参:
+runCols = filter(addTowCols('id'), colsList)
+def addTowCols(colName):
+    return lambda x: x.endswith(colName) # 要使用匿名函数去指定list里面的每一个item
+8.python优雅的写法:
+

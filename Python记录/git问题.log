@@ -1,0 +1,53 @@
+git remote add origin https://github.com/OliveKong/poster.git 实现本地项目和远程绑定
+
+Git global setup
+git config --global user.name "westlife"
+git config --global user.email "738758058@qq.com"
+
+查看已配置的用户信息：
+命令：git config --global --list
+生成sshkey：
+命令： ssh-keygen -t rsa -C " example@example.com"：
+
+
+Create a new repository
+git clone git@gitlab.com:west789/testgit.git
+cd testgit
+touch README.md
+git add README.md
+git commit -m "add README"
+git push -u origin master
+
+Existing folder
+cd existing_folder
+git init
+git remote add origin git@gitlab.com:west789/testgit.git
+git add .
+git commit -m "Initial commit"
+git push -u origin master
+
+Existing Git repository
+cd existing_repo
+git remote rename origin old-origin
+git remote add origin git@gitlab.com:west789/testgit.git
+git push -u origin --all
+git push -u origin --tags
+
+1.git查看是否与远程连接：ssh -T git@gitlab.com
+
+忽略对文件的跟踪:git rm --cached < file name >
+
+ssh-keygen -t rsa -C " example@example.com"：
+配置多个git远程：config文件配置
+Host gitlab.com
+    HostName gitlab.com
+    PreferredAuthentications publickey
+    IdentityFile C:/Users/psl/.ssh/id_rsa_labkey
+
+2.windows下创建.gitignore，使用ren 1.txt .gitignore创建无扩展名的文件
+3. git commit --amend 修改最后一次提交，在最后一次提交的基础上修改
+git log 查看提交历史
+git reflog 查看修改历史
+git reset --hard <commit的号：类似于f525fd或HEAD@1>
+另外尽量使用:
+git reset --soft <同上> 会回到暂存区状态，不会像hard一样所有修改删除
