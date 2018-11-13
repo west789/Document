@@ -112,7 +112,11 @@ SELECT a.* from stu a INNER JOIN
  on a.age=b.age and a.height=b.height ORDER BY age
 
  2.
+<<<<<<< HEAD
 mysql5.7更改data位置:
+=======
+
+>>>>>>> 3390ebe87688f6509f6db51ddef4ba54c7d772f9
  修改配置文件 /etc/my.cnf 包括sock
  chcon -R --reference=/var/lib/mysql /disk2T-2/mysqldb
  setenforce 0 

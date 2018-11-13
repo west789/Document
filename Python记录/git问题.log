@@ -4,6 +4,15 @@ Git global setup
 git config --global user.name "westlife"
 git config --global user.email "738758058@qq.com"
 
+<<<<<<< HEAD
+=======
+查看已配置的用户信息：
+命令：git config --global --list
+生成sshkey：
+命令： ssh-keygen -t rsa -C " example@example.com"：
+
+
+>>>>>>> 3390ebe87688f6509f6db51ddef4ba54c7d772f9
 Create a new repository
 git clone git@gitlab.com:west789/testgit.git
 cd testgit

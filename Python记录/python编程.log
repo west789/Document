@@ -42,7 +42,11 @@ if __name__ == '__main__':
 
 3.#打包
 pyinstaller -F youdaofanyi.py
+<<<<<<< HEAD
 pyinstaller -w -F -p F:\anacondainstall\lib\site-packages wafer_gui.py（以管理员权限运行cmd，若不可能出现
+=======
+pyinstaller -w -F -p F:\anacondainstall\lib\site-packages wafer_gui.py（以管理员权限运行cmd，若不,可能出现
+>>>>>>> 3390ebe87688f6509f6db51ddef4ba54c7d772f9
 permissError）
 ------  w参数去掉控制台， F打成一个exe， p打包某些依赖库经常因为这个出现打包后无法运行的情况
 若要查看日志加入-c参数， 即pyinstaller -w -c -F wafer_gui.py， 然后打开控制台，切换到dist目录下
@@ -86,7 +90,10 @@ runCols = filter(addTowCols('id'), colsList)
 def addTowCols(colName):
     return lambda x: x.endswith(colName) # 要使用匿名函数去指定list里面的每一个item
 8.python优雅的写法:
+<<<<<<< HEAD
 9. python的imap库：
 接收到邮箱名称编码问题:
 email.header.decode_header(filename)[0][0].decode('big5')
+=======
+>>>>>>> 3390ebe87688f6509f6db51ddef4ba54c7d772f9
 
