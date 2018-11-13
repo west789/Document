@@ -86,4 +86,7 @@ runCols = filter(addTowCols('id'), colsList)
 def addTowCols(colName):
     return lambda x: x.endswith(colName) # 要使用匿名函数去指定list里面的每一个item
 8.python优雅的写法:
+9. python的imap库：
+接收到邮箱名称编码问题:
+email.header.decode_header(filename)[0][0].decode('big5')
 
