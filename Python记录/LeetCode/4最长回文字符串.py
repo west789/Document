@@ -1,26 +1,28 @@
 
 def doMain(s):
 
-    maxStr = ''
-    tempStr = ''
-    if len(s) in (0, 1):
-        print (s)
-        return s
-    for item in s:
-        if item not in tempStr:
-            tempStr += item
-        else:
-            tempStr += item
-            splitStr = tempStr[tempStr.index(item):]                                                                    
-            if len(maxStr) < len(splitStr):
-                maxStr = splitStr                                   
-            # tempStr = tempStr[tempStr.index(item)+1:]
-    if maxStr == '':
-        maxStr = s[0]
-    print (maxStr)
+    res = ''
+    if s is None or len(s) == 0:
+        return res
+    for i in range(len(s)):
+        j = i - 1
+        k = i + 1
+        tmp = s[i]
+        while k < len(s) and s[k] == s[i]:
+            tmp = tmp + s[k]
+            k += 1
+        while j >= 0 and k < len(s) and s[j] == s[k]:
+            tmp = s[j] + tmp + s[k]
+            j -= 1
+            k += 1
+        print(tmp)
+        if len(tmp) > len(res):
+            res = tmp
+    # print (res)
+    return res
 
 
 
 if __name__ == '__main__':
-    s='abcda'
+    s='adada'
     doMain(s)

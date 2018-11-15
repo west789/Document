@@ -112,6 +112,8 @@ SELECT a.* from stu a INNER JOIN
  on a.age=b.age and a.height=b.height ORDER BY age
 
  2.
+
+
  修改配置文件 /etc/my.cnf 包括sock
  chcon -R --reference=/var/lib/mysql /disk2T-2/mysqldb
  setenforce 0 
