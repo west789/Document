@@ -111,12 +111,38 @@ SELECT a.* from stu a INNER JOIN
 (SELECT age, MAX(height) height from stu GROUP BY age)b
  on a.age=b.age and a.height=b.height ORDER BY age
 
- 2.
-<<<<<<< HEAD
-mysql5.7更改data位置:
-=======
+ 2.mysql5.7更改data位置:(linux方式)
 
->>>>>>> 3390ebe87688f6509f6db51ddef4ba54c7d772f9
  修改配置文件 /etc/my.cnf 包括sock
- chcon -R --reference=/var/lib/mysql /disk2T-2/mysqldb
+ 执行命令:chcon -R --reference=/var/lib/mysql /disk2T-2/mysqldb
  setenforce 0 
+ (windows方式)
+ 更改my.ini文件data_file,照着已有的写路径即可，重要的是要讲原来路径下的文件复制过去，包含一些必要的数据库配置文件
+ 
+ 3.sql_mode报错解决:
+修改my.cnf:
+sql_mode ='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+4.linux系统忽略大小写:
+lower_case_table_names=1
+
+5.快速导出导入大量数据的方式:
+ (1)查看数据库引擎 show engines;
+ (2)更改数据库引擎：InnoDB
+ default-storage-engine=MyISAM
+ (3)重启mysql服务
+ (4)导出数据:select * INTO outfile 'data.txt' fields terminated by ',' from 1x_tx;
+ 若出现Error :.........--secure-file-priv option错误
+ 执行命令: select @@global.secure_file_priv查看安全路径 
+
+ +--------------------------+
+ |@@global.secure_file_priv |
+ +--------------------------+
+ |/var/lib/mysql-files      |
+ +--------------------------+
+
+ (5)导入数据:load data infile 'data.txt' into table 2x_rx_bak fields terminated by ',';
+ load data infile '/var/lib/mysql-files/data.txt' into table 2x_rx_bak fields terminated by ',';
+ (6)MyISAM引擎更改为InnoDB引擎后要删除logs，ibdata相关文件
+
+ 6. mysql创建索引的列最大值为varchar(255)(不改最大设置值的情况下)
+ 因为mysql的InnoDB引擎设置了最大索引列长度不超过767，使用utf8编码时255*3=765byte，刚好在其范围
