@@ -111,8 +111,14 @@ SELECT a.* from stu a INNER JOIN
 (SELECT age, MAX(height) height from stu GROUP BY age)b
  on a.age=b.age and a.height=b.height ORDER BY age
 
+<<<<<<< HEAD
  2.mysql5.7更改data位置:(linux方式)
 
+=======
+ 2.
+
+
+>>>>>>> ba4f09d57b22b5010f1033b761209efcf331195e
  修改配置文件 /etc/my.cnf 包括sock
  执行命令:chcon -R --reference=/var/lib/mysql /disk2T-2/mysqldb
  setenforce 0 
