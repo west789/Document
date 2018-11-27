@@ -111,14 +111,8 @@ SELECT a.* from stu a INNER JOIN
 (SELECT age, MAX(height) height from stu GROUP BY age)b
  on a.age=b.age and a.height=b.height ORDER BY age
 
-<<<<<<< HEAD
+
  2.mysql5.7更改data位置:(linux方式)
-
-=======
- 2.
-
-
->>>>>>> ba4f09d57b22b5010f1033b761209efcf331195e
  修改配置文件 /etc/my.cnf 包括sock
  执行命令:chcon -R --reference=/var/lib/mysql /disk2T-2/mysqldb
  setenforce 0 
@@ -152,3 +146,23 @@ lower_case_table_names=1
 
  6. mysql创建索引的列最大值为varchar(255)(不改最大设置值的情况下)
  因为mysql的InnoDB引擎设置了最大索引列长度不超过767，使用utf8编码时255*3=765byte，刚好在其范围
+ 7.查看索引:
+ show index from table_name;
+创建索引:
+ALTER TABLE table_name ADD INDEX index_name (column_list)
+ALTER TABLE table_name ADD UNIQUE (column_list)
+ALTER TABLE table_name ADD PRIMARY KEY (column_list)
+
+CREATE INDEX index_name ON table_name (column_list)
+CREATE UNIQUE INDEX index_name ON table_name (column_list)
+删除索引:
+DROP INDEX index_name ON talbe_name
+ALTER TABLE table_name DROP INDEX index_name
+ALTER TABLE table_name DROP PRIMARY KEY
+8.mysql查询缓存
+show VARIABLES like '%query_cache%'
+show STATUS like 'qcache%'
+SELECT SQL_NO_CACHE value from index2 limit 50000, 1000
+show status like 'last_query_cost'
+show INDEX from index2
+EXPLAIN SELECT * from index3
