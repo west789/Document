@@ -38,13 +38,23 @@ git push -u origin --tags
 1.git查看是否与远程连接：ssh -T git@gitlab.com
 
 忽略对文件的跟踪:git rm --cached < file name >
+若出现:fatal: not removing './.vscode' recursively without -r
 
 ssh-keygen -t rsa -C " example@example.com"：
-配置多个git远程：config文件配置
+配置多个git远程；
+执行ssh-keygen -t rsa -C "pslCompanyWinComputer" -f /c/Users/pangs/.ssh/id_rsa_labkey
+在.ssh文件夹会生成新额ssh key
+config文件配置
 Host gitlab.com
     HostName gitlab.com
     PreferredAuthentications publickey
     IdentityFile C:/Users/psl/.ssh/id_rsa_labkey
+若是私有的gitlab,如gitlab.availink.com，则需要更改Host和HostName
+Host gitlab.availink.com
+    HostName gitlab.availink.com
+    PreferredAuthentications publickey
+    IdentityFile C:/Users/psl/.ssh/id_rsa_labkey
+
 
 2.windows下创建.gitignore，使用ren 1.txt .gitignore创建无扩展名的文件
 3. git commit --amend 修改最后一次提交，在最后一次提交的基础上修改
