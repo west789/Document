@@ -92,3 +92,7 @@ if __name__ == '__main__':
 uwsgi --ini uwsgi.ini --daemonize /tmp/uwsgi.log
 把 uwsgi 主进程号写进 文件然后 reload.
 uwsgi --reload ./uwsgi.pid
+
+13. scp -r fengff@10.209.152.109:/home/src/keycloak/ /home/psl/keycloak/
+14. firewall 命令
+15. adduser pangs; passwd pangs; usermod -aG wheel pangs
