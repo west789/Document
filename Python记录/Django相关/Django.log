@@ -1,3 +1,15 @@
+pip install django
+pip install djangorestframework
+
+django-admin startproject pslCloud
+新建apps文件夹， cd apps
+django-admin startapp accounts
+
+django2.1版本不支持mysql5.5
+
+python manage.py migrate
+
+
 1.  python manage.py 的作用是能加载setting文件
 
 2.Django连接mysql：
@@ -59,3 +71,43 @@ https://github.com/sshwsfc/xadmin
 删除项目下 celertbeat.pid文件即可
 python manage.py celery worker --loglevel=info
 python manage.py celery beat --loglevel=info
+
+1.rest_framework相关包
+from django.db import models
+
+from rest_framework import serializers
+import subprocess
+from django.http import HttpResponse
+from django.db import models
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import CodeListSerializer, CodeSerializer
+from .models import Code
+from rest_framework.authentication import SessionAuthentication
+
+5.django中使用celery
+启动celery:celery -A celeryProj worker --pool=solo -l info 
+
+celery beat -A avlcloud -l info
+#每2个小时中每分钟执行1次任务
+crontab(hour='*/2')
+ 
+#每3个小时的0分时刻执行1次任务
+#即[0,3,6,9,12,15,18,21]点0分
+crontab(minute=0, hour='*/3')
+ 
+#每3个小时或8点到12点的0分时刻执行1次任务
+#即[0,3,6,9,12,15,18,21]+[8,9,10,11,12]点0分
+crontab(minute=0, hour='*/3,8-12')
+ 
+#每个季度的第1个月中，每天每分钟执行1次任务
+#月份范围是1-12，每3个月为[1,4,7,10]
+crontab(month_of_year='*/3')
+ 
+#每月偶数天数的0点0分时刻执行1次任务
+crontab(minute=0, hour=0, day_of_month='2-31/2')
+ 
+#每年5月11号的0点0分时刻执行1次任务
+crontab(0, 0, day_of_month='11', month_of_year='5')

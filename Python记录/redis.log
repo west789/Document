@@ -1,0 +1,5 @@
+1.redis-cli -h 127.0.0.1 -p 3306 -a AvL_1108
+keys *
+sismember lot_id MEK505.00
+sadd lot_id MEK505.00
+srem lot_id MEK505.00

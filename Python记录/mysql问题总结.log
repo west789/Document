@@ -166,3 +166,41 @@ SELECT SQL_NO_CACHE value from index2 limit 50000, 1000
 show status like 'last_query_cost'
 show INDEX from index2
 EXPLAIN SELECT * from index3
+
+9.使用mysql直接copy data文件夹从5.5到5.7版本会出现
+mysql Table 'performance_schema.session_status' doesn't exist错误
+解决办法，进入mysql安装目录的bin文件，执行如下命令
+mysql_upgrade -u root -p --force
+10.mysql主从复制
+步骤：一、master修改：
+1>修改mysql配置
+#日志文件名 log-bin="E:/MySqlData/mysql-bin"
+#主数据库端的ID号：server-id=1
+2>重启mysql，创建用于同步的账户
+#创建slave账号slave_1,密码slave_1
+mysql>grant replication slave on *.* 'slave_1'@'%' identified by 'slave_1'
+#更新数据库权限: flush privileges
+3>查询master状态：show master STATUS
+二.从数据库slave的修改
+1>从数据库端ID号,server-id=2
+2>执行同步命令：
+mysql>change master to master_host='127.0.0.1',master_user='slave_1',
+master_password='slave_1',master_log_file='mysql-bin.000009',master_log_pos=196;
+3>检查从数据库状态: show slave statusm,确保Slave_IO_Running及Slave_Sql_Running进程必须是yes状态
+其他可能需要用到的配置:
+master端：binlog-do-db=YYY 需要同步的数据库，不在内的不同步，多数据库逗号隔开。
+如: binlog-do-db=test1, test2
+另外有: binlog-ignore-db=test1, test2
+slave端:replicate-do-db 设定需要复制的数据库，多数据库用逗号隔开
+replicate-ignore-db 设定需要忽略的数据库
+replicate-do-table 设定需要复制的表
+replicate-ignore-table 设定需要忽略的复制表
+replicate-wild-do-talbe 和replicate-do-table功能一样，但是可以使用通配符
+replicate-wild-ignore-table 和replicate-ignore-table功能一样，可使用通配符
+如：replicate-rewrite-db=pslcloud->pslcloud111
+replicate-do-table = pslcloud111.teacher
+replicate-do-table = pslcloud111.student
+最后：若从表使用trigger，则master的logbin_format不应使用row模式，最后使用mixed，
+如：binlog_format=MIXED
+
+

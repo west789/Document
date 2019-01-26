@@ -92,3 +92,11 @@ if __name__ == '__main__':
 uwsgi --ini uwsgi.ini --daemonize /tmp/uwsgi.log
 把 uwsgi 主进程号写进 文件然后 reload.
 uwsgi --reload ./uwsgi.pid
+13. centos添加用户
+sudo adduser pangs
+passwd pangs
+cat 查看用户组：/etc/group 查看用户列表：cat /etc/passwd
+添加用户到用户组：usermod -G sudo pangs 删除用户：userdel -r pangs -r会删除家目录
+mysql安装后查看是否有防火墙限制而不允许远程连接
+centos7防火墙：firewall-cmd --add-port=3306/tcp    firewall-cmd --remove-port=3306/tcp
+firewall-cmd --list-all
