@@ -100,3 +100,7 @@ cat 查看用户组：/etc/group 查看用户列表：cat /etc/passwd
 mysql安装后查看是否有防火墙限制而不允许远程连接
 centos7防火墙：firewall-cmd --add-port=3306/tcp    firewall-cmd --remove-port=3306/tcp
 firewall-cmd --list-all
+
+13. scp -r fengff@10.209.152.109:/home/src/keycloak/ /home/psl/keycloak/
+14. firewall 命令
+15. adduser pangs; passwd pangs; usermod -aG wheel pangs

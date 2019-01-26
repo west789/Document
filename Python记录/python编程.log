@@ -89,5 +89,18 @@ def addTowCols(item):
 runCols = filter(addTowCols('id'), colsList)
 def addTowCols(colName):
     return lambda x: x.endswith(colName) # 要使用匿名函数去指定list里面的每一个item
+<<<<<<< HEAD
+9. list嵌套list去重：
+raw_list = [["百度", "CPY"], ["京东", "CPY"], ["黄轩", "PN"], ["百度", "CPY"]]
+In [8]: new_list = [list(t) for t in set(tuple(_) for _ in raw_list)]
+
+In [9]: new_list
+Out[9]: [['京东', 'CPY'], ['百度', 'CPY'], ['黄轩', 'PN']]
+In [13]: new_list.sort(key=raw_list.index)
+
+In [14]: new_list
+Out[14]: [['百度', 'CPY'], ['京东', 'CPY'], ['黄轩', 'PN']]
+=======
 8.python优雅的写法:
+>>>>>>> c73bb01a55b470008ead7068947148dbf65228b5
 
