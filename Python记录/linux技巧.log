@@ -95,4 +95,12 @@ uwsgi --reload ./uwsgi.pid
 
 13. scp -r fengff@10.209.152.109:/home/src/keycloak/ /home/psl/keycloak/
 14. firewall 命令
-15. adduser pangs; passwd pangs; usermod -aG wheel pangs
+15. adduser pangs; passwd pangs; usermod -aG wheel pangs 需要logout一下重新登入方可生效
+16. sudo groupadd docker; sudo gpasswd -a ${USER} docker; sudo systemctl restart docker; newgrp - docker
+17. docker run --name mymysql -p 3307:3306 -v "$PWD/data":/var/lib/mysql 
+-v "$PWD/conf":/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=root123 -d mysql:5.7.24
+18.grafana各个文件路径:
+log： /var/log/grafana/grafana.log
+默认ini: /usr/share/grafana
+还有一个ini路径非默认路径；/etc/grafana/
+发邮件的[smtp]如果出现验证证书错误需要: skip_verify 值改为true

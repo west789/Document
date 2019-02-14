@@ -59,3 +59,55 @@ https://github.com/sshwsfc/xadmin
 删除项目下 celertbeat.pid文件即可
 python manage.py celery worker --loglevel=info
 python manage.py celery beat --loglevel=info
+
+16.django的one to one field查询如：
+class Account(models.Model):
+    username = models.CharField(max_length=20, null=True)
+    password = models.CharField(max_length=40, null=True)
+class Contact(models.Model):
+    address = models.CharField(max_length=100, null=True)
+    mobile = models.CharField(max_length=20, null=True)
+    account = models.OneToOneField(Account, on_delete=models.CASCADE)
+正向查询: Account.objects.get(id=1).contact.address
+反向查询:Contact.objects.get(id=1).account.username 
+ForeignKey和ManyToManyField
+class Blog(models.Model):
+    name = models.CharField(max_length=100)
+    tagline = models.TextField()
+class Author(models.Model):
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+
+class Entry(models.Model):
+    blog = models.ForeignKey(Blog)
+    authors = models.ManyToManyField(Author)
+    headline = models.CharField(max_length=255)
+    body_text = models.TextField()
+    pub_date = models.DateField()
+    mod_date = models.DateField()
+    n_comments = models.IntegerField()
+    n_pingbacks = models.IntegerField()
+    rating = models.IntegerField()
+正向查询：e = Entry.objects.get(id=2) e.blog
+        Entry.objects.filter(blog__name='Beatles Blog')
+反向查询: b = Blog.objects.get(id=1) b.entry_set.all()
+ManyToManyField的查询:
+from django.db import models
+
+class Person(models.Model):
+    name = models.CharField(max_length=50)
+
+class Group(models.Model):
+    name = models.CharField(max_length=128)
+    members = models.ManyToManyField(Person, through='Membership', through_fields=('group', 'person'))
+
+class Membership(models.Model):
+    group = models.ForeignKey(Group)
+    person = models.ForeignKey(Person)
+    inviter = models.ForeignKey(Person, related_name="membership_invites")
+    invite_reason = models.CharField(max_length=64)
+正向查询:e = Group.objects.get(id=3) e.members.all()
+反向查询:a = Person.objects.get(id=1) a.group_set.all()            
+
+17.当celery出现：ValueError: not enough values to unpack (expected 3, got 0)时
+使用celery -A avlcloud_api worker --pool=solo -l info
