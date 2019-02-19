@@ -92,3 +92,38 @@ if __name__ == '__main__':
 uwsgi --ini uwsgi.ini --daemonize /tmp/uwsgi.log
 把 uwsgi 主进程号写进 文件然后 reload.
 uwsgi --reload ./uwsgi.pid
+13. centos添加用户
+sudo adduser pangs
+passwd pangs
+cat 查看用户组：/etc/group 查看用户列表：cat /etc/passwd
+添加用户到用户组：usermod -G sudo pangs 删除用户：userdel -r pangs -r会删除家目录
+mysql安装后查看是否有防火墙限制而不允许远程连接
+centos7防火墙：firewall-cmd --add-port=3306/tcp    firewall-cmd --remove-port=3306/tcp
+firewall-cmd --list-all
+
+13. scp -r fengff@10.209.152.109:/home/src/keycloak/ /home/psl/keycloak/
+14. firewall 命令
+15. adduser pangs; passwd pangs; usermod -aG wheel pangs 需要logout一下重新登入方可生效
+16. sudo groupadd docker; sudo gpasswd -a ${USER} docker; sudo systemctl restart docker; newgrp - docker
+17. docker run --name mymysql -p 3307:3306 -v "$PWD/data":/var/lib/mysql 
+-v "$PWD/conf":/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=root123 -d mysql:5.7.24
+18.grafana各个文件路径:
+log： /var/log/grafana/grafana.log
+默认ini: /usr/share/grafana
+还有一个ini路径非默认路径；/etc/grafana/
+发邮件的[smtp]如果出现验证证书错误需要: skip_verify 值改为true
+19.docker run -p 9000:9000 --name minio1 \
+  -v /mnt/data:/data \
+  -v /mnt/config:/root/.minio \
+  minio/minio server /data
+  -e "MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" -e "MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+  docker run -p 9000:9000  --name minio1 -v "$PWD/data":/data -v "$PWD/config":/root/.minio/minio minio/minio server /data
+  mc config host add avlcloud http://10.209.152.211:9000 CNCLOR4S0YIW267J5IQ2 01ciGAjGyJ6vZqj7A26SkbYMwtGLnCm9ijjQmp7W
+{'User-Agent': 'Minio (Windows; AMD64) minio-py/4.0.11', 
+'Host': '10.209.152.211:9000', 
+'X-Amz-Date': '20190218T032245Z', 
+'X-Amz-Content-Sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 
+'Authorization': 'AWS4-HMAC-SHA256 Credential=CNCLOR4S0YIW267J5IQ2/20190218/us-east-1/s3/aws4_request, 
+SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, 
+Signature=62d4c93090ada4717e2413628d685019b9d104793c719d2f0d3a1f33fb0effa3'}
+15. adduser pangs; passwd pangs; usermod -aG wheel pangs

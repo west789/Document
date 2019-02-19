@@ -63,3 +63,9 @@ git reflog 查看修改历史
 git reset --hard <commit的号：类似于f525fd或HEAD@1>
 另外尽量使用:
 git reset --soft <同上> 会回到暂存区状态，不会像hard一样所有修改删除
+4.每个项目配置git
+[user]
+    name = pangs
+    email = Shaoliang.Pang@availink.com
+
+

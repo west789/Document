@@ -1,3 +1,15 @@
+pip install django
+pip install djangorestframework
+
+django-admin startproject pslCloud
+新建apps文件夹， cd apps
+django-admin startapp accounts
+
+django2.1版本不支持mysql5.5
+
+python manage.py migrate
+
+
 1.  python manage.py 的作用是能加载setting文件
 
 2.Django连接mysql：
@@ -59,3 +71,94 @@ https://github.com/sshwsfc/xadmin
 删除项目下 celertbeat.pid文件即可
 python manage.py celery worker --loglevel=info
 python manage.py celery beat --loglevel=info
+
+16.django的one to one field查询如：
+class Account(models.Model):
+    username = models.CharField(max_length=20, null=True)
+    password = models.CharField(max_length=40, null=True)
+class Contact(models.Model):
+    address = models.CharField(max_length=100, null=True)
+    mobile = models.CharField(max_length=20, null=True)
+    account = models.OneToOneField(Account, on_delete=models.CASCADE)
+正向查询: Account.objects.get(id=1).contact.address
+反向查询:Contact.objects.get(id=1).account.username 
+ForeignKey和ManyToManyField
+class Blog(models.Model):
+    name = models.CharField(max_length=100)
+    tagline = models.TextField()
+class Author(models.Model):
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+
+class Entry(models.Model):
+    blog = models.ForeignKey(Blog)
+    authors = models.ManyToManyField(Author)
+    headline = models.CharField(max_length=255)
+    body_text = models.TextField()
+    pub_date = models.DateField()
+    mod_date = models.DateField()
+    n_comments = models.IntegerField()
+    n_pingbacks = models.IntegerField()
+    rating = models.IntegerField()
+正向查询：e = Entry.objects.get(id=2) e.blog
+        Entry.objects.filter(blog__name='Beatles Blog')
+反向查询: b = Blog.objects.get(id=1) b.entry_set.all()
+ManyToManyField的查询:
+from django.db import models
+
+class Person(models.Model):
+    name = models.CharField(max_length=50)
+
+class Group(models.Model):
+    name = models.CharField(max_length=128)
+    members = models.ManyToManyField(Person, through='Membership', through_fields=('group', 'person'))
+
+class Membership(models.Model):
+    group = models.ForeignKey(Group)
+    person = models.ForeignKey(Person)
+    inviter = models.ForeignKey(Person, related_name="membership_invites")
+    invite_reason = models.CharField(max_length=64)
+正向查询:e = Group.objects.get(id=3) e.members.all()
+反向查询:a = Person.objects.get(id=1) a.group_set.all()            
+
+17.当celery出现：ValueError: not enough values to unpack (expected 3, got 0)时
+使用celery -A avlcloud_api worker --pool=solo -l info
+1.rest_framework相关包
+from django.db import models
+
+from rest_framework import serializers
+import subprocess
+from django.http import HttpResponse
+from django.db import models
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import CodeListSerializer, CodeSerializer
+from .models import Code
+from rest_framework.authentication import SessionAuthentication
+
+5.django中使用celery
+启动celery:celery -A celeryProj worker --pool=solo -l info 
+
+celery beat -A avlcloud -l info
+#每2个小时中每分钟执行1次任务
+crontab(hour='*/2')
+ 
+#每3个小时的0分时刻执行1次任务
+#即[0,3,6,9,12,15,18,21]点0分
+crontab(minute=0, hour='*/3')
+ 
+#每3个小时或8点到12点的0分时刻执行1次任务
+#即[0,3,6,9,12,15,18,21]+[8,9,10,11,12]点0分
+crontab(minute=0, hour='*/3,8-12')
+ 
+#每个季度的第1个月中，每天每分钟执行1次任务
+#月份范围是1-12，每3个月为[1,4,7,10]
+crontab(month_of_year='*/3')
+ 
+#每月偶数天数的0点0分时刻执行1次任务
+crontab(minute=0, hour=0, day_of_month='2-31/2')
+ 
+#每年5月11号的0点0分时刻执行1次任务
+crontab(0, 0, day_of_month='11', month_of_year='5')

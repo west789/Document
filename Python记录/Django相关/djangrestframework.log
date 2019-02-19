@@ -1,0 +1,29 @@
+class GroupSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Group
+        fields = ('id', 'name')
+
+class UserSerializer(serializers.ModelSerializer):
+    groups = GroupSerializer(many=True)
+    phone = serializers.CharField(source='profile.phone', read_only=True)
+    name = serializers.CharField(source='profile.name', read_only=True)
+    menus = serializers.SerializerMethodField()
+    is_active = serializers.BooleanField(source='profile.is_cms_active')
+
+    def get_menus(self, user):
+        return get_menus(user)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'name', 'email', 'phone', 'groups', 'menus', 'is_active')
+
+外键直接可以引用其他的serializer,例如group，可以看到response中group是嵌套的
+
+外键的属性可以使用source，例如phone
+
+不在原来model上的东西使用SerializerMethodField（或者在model上但是你要对这个值做一些特殊处理)
+serializer可以做逻辑上的操作，然而最好不要做查询（你可以用SerializerMethodField做一些数据转换例如0变为假1变为真什么的，
+然而最好不要做复杂的数据库查询），这种事情可以在view上做好（注意可以用select_related减少多次查询），因为这是每一个model都要serializer一次。
+
+如果说跟前端对的修改和查询使用不同的serializer，那么你就写两个，不希望修改的字段加上readonly（或者放在readonly_fields里面）

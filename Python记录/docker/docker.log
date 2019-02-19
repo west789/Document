@@ -1,0 +1,8 @@
+1.docker run --name mymysql -p 3307:3306 -v "$PWD/data":/var/lib/mysql 
+-v "$PWD/conf":/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=root123 -d mysql:5.7.24
+替换docker容器内的文件,
+从容器到主机:docker cp mymysql:/etc/mysql/ /home/pangs/mysqldocker/mysql
+从主机到容器:docker cp mysqld.cnf mymysql:/etc/mysql/mysql.conf.d/mysqld.cnf
+show global variables like '%lower_case%';
+
+grafana的路径：/usr/share/grafana
