@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 def quick_sort(arr, low, high):
     if low<high:
         q = partition(arr, low, high)
@@ -19,7 +18,6 @@ def partition(arr, low, high):
 arr = [6, 3, 5, 4, 2, 3]
 print (arr)
 quick_sort(arr, 0, len(arr)-1)
-=======
 # def QuickSort(arr):
 #     if len(arr)==1:
 #         return arr
@@ -53,5 +51,4 @@ def quick_sort(array, left, right):
 
 arr = [6, 9, 88, 50, 6, 12, 16]
 quick_sort(arr, 0, len(arr)-1) 
->>>>>>> e432abd78df0849c0870560b1a1f9d838f3850b0
 print (arr)
