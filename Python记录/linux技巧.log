@@ -92,6 +92,14 @@ if __name__ == '__main__':
 uwsgi --ini uwsgi.ini --daemonize /tmp/uwsgi.log
 把 uwsgi 主进程号写进 文件然后 reload.
 uwsgi --reload ./uwsgi.pid
+13. centos添加用户
+sudo adduser pangs
+passwd pangs
+cat 查看用户组：/etc/group 查看用户列表：cat /etc/passwd
+添加用户到用户组：usermod -G sudo pangs 删除用户：userdel -r pangs -r会删除家目录
+mysql安装后查看是否有防火墙限制而不允许远程连接
+centos7防火墙：firewall-cmd --add-port=3306/tcp    firewall-cmd --remove-port=3306/tcp
+firewall-cmd --list-all
 
 13. scp -r fengff@10.209.152.109:/home/src/keycloak/ /home/psl/keycloak/
 14. firewall 命令
@@ -118,3 +126,4 @@ log： /var/log/grafana/grafana.log
 'Authorization': 'AWS4-HMAC-SHA256 Credential=CNCLOR4S0YIW267J5IQ2/20190218/us-east-1/s3/aws4_request, 
 SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, 
 Signature=62d4c93090ada4717e2413628d685019b9d104793c719d2f0d3a1f33fb0effa3'}
+15. adduser pangs; passwd pangs; usermod -aG wheel pangs
