@@ -166,3 +166,9 @@ SELECT SQL_NO_CACHE value from index2 limit 50000, 1000
 show status like 'last_query_cost'
 show INDEX from index2
 EXPLAIN SELECT * from index3
+9.navicate windows破解
+下载navicate preminum,下载navicat-keygen-for-x64，github地址https://github.com/DoubleLabyrinth/navicat-keygen/releases
+解压缩navicate-keygen-for-x64安装包，并进入安装包，执行navicate-patch.exe "D\Navicat Premium 12"，生成RegPrivateKey.pem
+然后执行navicate-keygen.exe -text RegPrivateKey.pem,
+安装提示输入要破解的navicate类型，语言，版本等，然后等待输入Request code
+断网，打开navicate，找到注册窗口，输入命令行生成的序列号，在手动激活窗口输入请求码，至少两次回车，得到激活码，然后填入navicate，然后激活即可
