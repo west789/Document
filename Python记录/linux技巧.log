@@ -127,3 +127,5 @@ log： /var/log/grafana/grafana.log
 SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, 
 Signature=62d4c93090ada4717e2413628d685019b9d104793c719d2f0d3a1f33fb0effa3'}
 15. adduser pangs; passwd pangs; usermod -aG wheel pangs
+16.在windows上使用subprocess需要shell=True
+{"type":"cmd","flag": "upload", "target": "avlcloud/datasets/"}D:\\config.json

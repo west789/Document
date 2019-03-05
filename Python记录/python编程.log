@@ -101,3 +101,23 @@ In [14]: new_list
 Out[14]: [['百度', 'CPY'], ['京东', 'CPY'], ['黄轩', 'PN']]
 8.python优雅的写法:
 10.pipreqs ./ --encoding=utf-8
+11.subprocess使用
+    def run_code(*args):
+        try:
+            status = True
+            popenargs = [settings.MINIO_COMMAND_PATH]
+            popenargs.extend(args)
+            print(' '.join(popenargs))
+            output = subprocess.check_output(popenargs,
+                                             universal_newlines=True,
+                                             stderr=subprocess.STDOUT,
+                                             timeout=30,
+                                             shell=settings.MINIO_COMMAND_OUTPUT_SHELL)
+        except subprocess.CalledProcessError as e:
+            output, status = e.output, False
+            logger.error(output)
+        except subprocess.TimeoutExpired as e:
+            output, status = '\r\n'.join(['Time Out!!!', e.output]), False
+            logger.error(output)
+        print(output)
+        return output, status
