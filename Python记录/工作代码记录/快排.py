@@ -30,6 +30,6 @@ def partition(arr, l, r):
     arr[i+1], arr[r] = arr[r], arr[i+1]
     return i+1
 
-arr = [3,2,5,14,12]
+arr = [13,2,5,14,12]
 quick_sort(arr, 0, len(arr)-1)
 print(arr)
