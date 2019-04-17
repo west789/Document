@@ -116,9 +116,14 @@ log： /var/log/grafana/grafana.log
   -v /mnt/data:/data \
   -v /mnt/config:/root/.minio \
   minio/minio server /data
+  -e "MINIO_HTTP_TRACE=/dev/stdout"
   -e "MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" -e "MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
-  docker run -p 9000:9000  --name minio1 -v "$PWD/data":/data -v "$PWD/config":/root/.minio/minio minio/minio server /data
-  mc config host add avlcloud http://10.209.152.211:9000 CNCLOR4S0YIW267J5IQ2 01ciGAjGyJ6vZqj7A26SkbYMwtGLnCm9ijjQmp7W
+  docker run -p 9000:9000  --name minio1 -e "MINIO_HTTP_TRACE=/dev/stdout" -v "$PWD/data":/data -v "$PWD/config":/root/.minio/minio minio/minio server /data 
+  mc config host add avlcloud http://10.209.152.211:9000 
+  minio 账户密码:-------------------------------------------------
+  CNCLOR4S0YIW267J5IQ2 01ciGAjGyJ6vZqj7A26SkbYMwtGLnCm9ijjQmp7W
+  1733RI5SCWQVMCW7JVE4 6dayKIsvsnbRtECvGXVTMdPv3Hj7mZuvWhPey+NR
+  ---------------------------------------------------------------
 {'User-Agent': 'Minio (Windows; AMD64) minio-py/4.0.11', 
 'Host': '10.209.152.211:9000', 
 'X-Amz-Date': '20190218T032245Z', 
@@ -129,3 +134,44 @@ Signature=62d4c93090ada4717e2413628d685019b9d104793c719d2f0d3a1f33fb0effa3'}
 15. adduser pangs; passwd pangs; usermod -aG wheel pangs
 16.在windows上使用subprocess需要shell=True
 {"type":"cmd","flag": "upload", "target": "avlcloud/datasets/"}D:\\config.json
+["datasets", "mybucket"]
+["mybucket/confi/"]
+user_name = request.data.get('user_name')
+        policy_name = MinioPolicy.objects.get(id=request.data.get('minio_policy'))
+        McCommand.change_user_policy(user_name, policy_name)
+
+17.rm `ls grep| -v "aa"`  rm `ls |grep -v "^aa$" `
+
+https://account.availink.com/auth/realms/avlcloud/protocol/openid-connect/certs
+
+"logger": {
+		"console": {
+			"enabled": true
+		},
+		"http": {
+			"target1": {
+				"enabled": false,
+				"endpoint": "https://username:password@example.com/api"
+			}
+		}
+	},
+set HTTP_PROXY=10.209.160.30:808
+set HTTPS_PROXY=10.209.160.30:808
+
+
+eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ3S29CSjBZejFJQ05lSEhXTDY4ODU5WWQ5QVdCZDhCdGR6aVBfRzBLSmZFIn0.eyJqdGkiOiI3NjIwYTFmZC01ZjcyLTQ0YzctYjMxOS0zYWI3NmVhM2Q2NDEiLCJleHAiOjE1NTM1ODg1MjcsIm5iZiI6MCwiaWF0IjoxNTUzNTg4MjI3LCJpc3MiOiJodHRwOi8vMTAuMjA5LjE1Mi4yMTE6ODE4MC9hdXRoL3JlYWxtcy9hdmxjbG91ZCIsImF1ZCI6ImF2bGNsb3VkIiwic3ViIjoiY2FkNTgzZDktZjA4Ni00NTI1LTliZTAtN2Y3MzljM2IyY2ZhIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYXZsY2xvdWQiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiJhMWE1NmE4Yi00NmQzLTRkMTktOTNmMS1kYWViYWNkMTExYmIiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbXSwicmVzb3VyY2VfYWNjZXNzIjp7ImF2bGNsb3VkIjp7InJvbGVzIjpbImFkbWluLXVzZXIiLCJub3JtYWwtdXNlciJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoicGFuZ3NGaXJzdCBwYW5nc0xhc3QiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJwYW5ncyIsImdpdmVuX25hbWUiOiJwYW5nc0ZpcnN0IiwiZmFtaWx5X25hbWUiOiJwYW5nc0xhc3QiLCJlbWFpbCI6InNoYW9saWFuZy5wYW5nQGF2YWlsaW5rLmNvbSJ9.Enz103lN0srlVOBQnzSCw1kVAIUcyxyfklJriAl7dqeC8FZgVFw5C9L7ySzimaQZvk8t-vj5k4TPCkLGgQTv82T7rGUPDtPtquO3SuWPwfUlNOxOVqvAIMo6noPkzV6vcdHe6SBq_r2UI_CdwXRKhC9tNsPS3y0dAOPYq7xkQtxZpGtN0xybLWCj41z26SKS7c-Xbmx7QbyLiYyQVgIzuRFNtSFF2XZSZNupmu8A-_S8JgbtwGhPkt-_QtuKglF0yMB2jM-0VbxFziMUAuH-VIHrh_Peu1WyUZmLcxcUxNegbeQ8azYfJTPnsrd_uu7xeGCVM5ijBd1q13Yx32AHAg
+
+
+class MinioUserSerializer(serializers.ModelSerializer):
+    secret_key = serializers.CharField(write_only=True)
+    minio_policy = MinioPolicyRelatedSerializer(label="policy", read_only=True)
+    # buckets = serializers.SerializerMethodField(read_only=True)
+    # policy_name = serializers.SerializerMethodField(read_only=True)
+    #
+    # def get_buckets(self, obj):
+    #     return obj.minio_policy.buckets
+    #
+    # def get_policy_name(self, obj):
+    #     return obj.minio_policy.client_policy_name
+
+

@@ -162,3 +162,7 @@ crontab(minute=0, hour=0, day_of_month='2-31/2')
  
 #每年5月11号的0点0分时刻执行1次任务
 crontab(0, 0, day_of_month='11', month_of_year='5')
+12.
+minio_name = serializers.CharField(source='minio_policy.policy_name')
+["datasets","mybucketes"]
+["mybucket/confi/"]

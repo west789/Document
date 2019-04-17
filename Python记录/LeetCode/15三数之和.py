@@ -1,6 +1,5 @@
 
 
-<<<<<<< HEAD
 def doMain(nums):
     # res = []
     # for i in range(len(nums)-2):
@@ -56,7 +55,6 @@ def doMain(nums):
 if __name__ == '__main__':
     nums = [0,0,0,0,0]
     doMain(nums)
-=======
 def threeSum(nums):
         """
         :type nums: List[int]
@@ -85,4 +83,3 @@ def threeSum(nums):
 if __name__ == "__main__":
     nums = [-1,5,2,1,0]
     threeSum(nums)
->>>>>>> c73bb01a55b470008ead7068947148dbf65228b5

@@ -6,3 +6,48 @@
 show global variables like '%lower_case%';
 
 grafana的路径：/usr/share/grafana
+nohup ./program >/dev/null 2>&1 &
+curl -s -X PATCH --url http://10.209.152.211:8001/services/example-service \
+-d 'name=eg-service' \
+-d 'host=www.baidu.com' \
+ | python -m json.tool
+
+ curl -s  http://10.209.152.211:8001/routes/be5ea76c-3777-4143-bcf3-29231e8f98bf/service | python -m json.tool
+
+curl -s -X POST --url http://10.209.152.211:8001/services/ \
+-d 'name=eg1-server' \
+-d 'protocol=http' \
+-d 'host=www.163.com'\
+| python -m json.tool
+
+curl -s -X PATCH --url http://10.209.152.211:8001/services/eg-service \
+-d 'protocol=http' \
+-d 'host=www.baidu.com'\
+| python -m json.tool
+
+curl -s -X POST --url http://10.209.152.211:8001/routes \
+-d 'methods=GET'  \
+-d 'paths=/two' \
+-d 'service.id=f8571215-929d-488b-9501-aca12df6dc33' \
+| python -m json.tool
+
+curl -s -X POST --url http://10.209.152.211:8001/routes \
+-d 'paths=/' \
+-d 'service.id=a4404159-9268-46ca-bdc6-65c8ced0d154' \
+| python -m json.tool
+curl -s -X DELETE http://10.209.152.211:8001/routes/6a362973-2362-4d9c-be02-098f92e1deb2 | python -m json.tool
+
+curl -s http://10.209.152.211:8001/consumers/psl | python -m json.tool
+curl -s http://10.209.152.211:8001/consumers?size=1 | python -m json.tool
+curl -s -X POST --url http://10.209.152.211:8001/consumers  -d 'username=psl' | python -m json.tool
+curl -X POST http://10.209.152.211:8001/upstreams --data "name=hello"
+
+curl -X PATCH http://10.209.152.211:8001/routes/6a362973-2362-4d9c-be02-098f92e1deb2 --data "paths[]=/" 
+
+curl -X POST http://10.209.152.211:8001/upstreams --data "name=hellov1" 
+curl -X POST http://10.209.152.211:8001/upstreams/hellov1/targets --data "target=10.209.152.211:3000" --data "weight=100"
+
+curl -X PATCH http://10.209.152.211:8001/upstreams/hello/targets/92bee6e7-4e0d-44fa-b0c2-8779ff62709f --data "target=10.209.152.211:3000" --data "weight=100"
+ --data "target=10.209.152.211:3000/login" --data "weight=100"
+ docker run -ti -e "DB_ADAPTER=postgres" -e "DB_HOST=10.209.152.211" -e "DB_PORT=5432" -e "DB_USER=kong" -e "DB_PASSWORD=kong" -e "DB_DATABASE=konga" -e "NODE_ENV=development" --name konga pantsel/konga
+ docker run -d -p 1337:1337 -e "DB_ADAPTER=postgres" -e "DB_HOST=10.209.152.211" -e "DB_PORT=5432" -e "DB_USER=kong" -e "DB_PASSWORD=kong" -e "DB_DATABASE=konga" -e "NODE_ENV=production" --name kongs pantsel/konga
