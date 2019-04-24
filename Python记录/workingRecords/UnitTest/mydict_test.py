@@ -27,6 +27,7 @@ from mydict import Dict, Student, add
 #         self.assertEqual(stu.score, 30)
 
 class TestAdd(unittest.TestCase):
+    
     def test_add(self):
         result = add(4)
         self.assertTrue(result)
