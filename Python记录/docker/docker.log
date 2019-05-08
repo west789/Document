@@ -5,6 +5,9 @@
 从主机到容器:docker cp mysqld.cnf mymysql:/etc/mysql/mysql.conf.d/mysqld.cnf
 show global variables like '%lower_case%';
 
+docker run --name=cocalc -d -v "$PWD/projects":/projects -p 444:443 sagemathinc/cocalc
+docker run --name=cocalc -d -v "$PWD/projects":/projects -p 444:443 sagemathinc/cocalc
+
 grafana的路径：/usr/share/grafana
 nohup ./program >/dev/null 2>&1 &
 curl -s -X PATCH --url http://10.209.152.211:8001/services/example-service \
